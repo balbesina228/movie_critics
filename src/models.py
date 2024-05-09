@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base, engine
+from src.database import Base, engine
 
 
 class User(Base):
@@ -15,6 +15,16 @@ class User(Base):
     critics = relationship("Critics", back_populates="owner")
 
 
+class Movie(Base):
+    __tablename__ = "movies"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String, index=True)
+    description = Column(String)
+
+    movie_critics = relationship("Critics", back_populates="movie")
+
+
 class Critics(Base):
     __tablename__ = "critics"
 
@@ -22,5 +32,7 @@ class Critics(Base):
     title = Column(String, index=True)
     text = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    movie_id = Column(Integer, ForeignKey("movies.id"))
 
     owner = relationship("User", back_populates="critics")
+    movie = relationship("Movie", back_populates="movie_critics")

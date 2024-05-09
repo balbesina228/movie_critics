@@ -13,6 +13,7 @@ class CriticsCreate(CriticsBase):
 class Critics(CriticsBase):
     id: int
     owner_id: int
+    movie_id: int
 
     class Config:
         orm_mode = True
@@ -32,3 +33,16 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class MovieBase(BaseModel):
+    title: str
+    description: str | None = None
+
+
+class MovieCreate(MovieBase):
+    pass
+
+
+class Movie(MovieBase):
+    id: int
